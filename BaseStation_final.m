@@ -1,6 +1,6 @@
 clear all; close all; clc; %e is shorthan2,kd for *10^.
 k = 1;
-noise_dB=-174*2;
+noise_dB=-174;
 noise=db2pow(noise_dB);
 BW = 5*10^6;
 BS_pos_interference=[-120-150*i;-170+340*i;-220+720*i;220+800*i;380+70*i];N_interference=length(BS_pos_interference);
@@ -13,15 +13,17 @@ BS_pos_interference=[-120-150*i;-170+340*i;-220+720*i;220+800*i;380+70*i];N_inte
 %표준
 % BS_pos=[60+280*i;150+602.5*i;230+205*i;185+42.5*i;230+340*i;552.5+440*i]; N=length(BS_pos);
 %표준개선
-BS_pos=[60+280*i;150+602.5*i;115+42.5*i;230+340*i;390+500*i;450+300*i]; N=length(BS_pos);
+% BS_pos=[60+280*i;150+602.5*i;115+42.5*i;230+340*i;390+500*i;450+300*i]; N=length(BS_pos);
+
+BS_pos=[100+70*i;60+280*i;120+550*i;200+210*i;230+340*i;367+475*i;425+275i;540+400*i]; N=length(BS_pos);
 
 
 
-personX=2.5;
-personY=2.5;
-for x = 0 : personX : 200
+
+
+for x = 0 : 2.5 : 200
     
-    for y = 0 : personY : 680
+    for y = 0 : 2.5 : 680
         pos(k) = (x) +(y)*j;
         SNR(k) = SINR(Pr(N,BS_pos,pos(k),distance(N,pos(k),BS_pos)),N,Pr(N_interference,BS_pos_interference,pos(k),distance(N_interference,pos(k),BS_pos_interference)),noise);
         if x>=170%대학본부            
@@ -426,7 +428,7 @@ for x=1:1:N
         
         if real(pos-BS_pos(x))>=0  %1,4사분면
             for y=2:-1:0
-                PrBuilding_result(3*x-y)=Pt_dB_Hz-(13.54+39.08*log10(distance(x))+20*log10(fc)+5-10*log10(0.3*10.^((-2-0.2*f)./10))+0.7*10.^((-5-4*f)./10));
+                PrBuilding_result(3*x-y)=Pt_dB_Hz-(13.54+39.08*log10(distance(x)))+20*log10(fc)+5-10*log10(0.3*10.^((-2-0.2*f)./10))+0.7*10.^((-5-4*f)./10);
                 A(3*x-y)=-1*min(12*((-theta(x)+120*y)/70).^2,Am);
                 PrBuilding_result(3*x-y)=PrBuilding_result(3*x-y)+A(3*x-y);
                 PrBuilding_result(3*x-y)=10.^(PrBuilding_result(3*x-y)./10);
@@ -434,7 +436,7 @@ for x=1:1:N
             
         else  %2,3분면
             for y=2:-1:0
-                PrBuilding_result(3*x-y)=Pt_dB_Hz-(13.54+39.08*log10(distance(x))+20*log10(fc)+5-10*log10(0.3*10.^((-2-0.2*f)./10))+0.7*10.^((-5-4*f)./10));
+                PrBuilding_result(3*x-y)=Pt_dB_Hz-(13.54+39.08*log10(distance(x)))+20*log10(fc)+5-10*log10(0.3*10.^((-2-0.2*f)./10))+0.7*10.^((-5-4*f)./10);
                 A(3*x-y)=-1*min(12*((theta(x)+120*y)/70).^2,Am);
                 PrBuilding_result(3*x-y)=PrBuilding_result(3*x-y)+A(3*x-y);
                 PrBuilding_result(3*x-y)=10.^(PrBuilding_result(3*x-y)./10);
@@ -466,7 +468,7 @@ for x=1:1:N
         
         if real(pos-BS_pos(x))>=0  %1,4사분면
             for y=2:-1:0
-                Pr_result(3*x-y)=Pt_dB_Hz-(13.54+39.08*log10(distance(x))+20*log10(fc));
+                Pr_result(3*x-y)=Pt_dB_Hz-(13.54+39.08*log10(distance(x)))+20*log10(fc);
                 A(3*x-y)=-1*min(12*((-theta(x)+120*y)/70).^2,Am);
                 Pr_result(3*x-y)=Pr_result(3*x-y)+A(3*x-y);
                 Pr_result(3*x-y)=10.^(Pr_result(3*x-y)./10);
@@ -474,7 +476,7 @@ for x=1:1:N
             
         else  %2,3분면
             for y=2:-1:0
-                Pr_result(3*x-y)=Pt_dB_Hz-(13.54+39.08*log10(distance(x))+20*log10(fc));
+                Pr_result(3*x-y)=Pt_dB_Hz-(13.54+39.08*log10(distance(x)))+20*log10(fc);
                 A(3*x-y)=-1*min(12*((theta(x)+120*y)/70).^2,Am);
                 Pr_result(3*x-y)=Pr_result(3*x-y)+A(3*x-y);
                 Pr_result(3*x-y)=10.^(Pr_result(3*x-y)./10);
